@@ -9,7 +9,7 @@ function foo (argument) {
   }
 
   // Вариант через тернарные операторы
-  typeof(argument) !== 'string' ? console.log('Не строка') : console.log(argument.trim().slice(0, 30) + '...');
+  typeof(argument) !== 'string' ? console.log('Не строка') : argument.length >= 30 ? console.log(argument.trim().slice(0, 30) + '...') : console.log(argument);
 }
   
   foo('Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, amet.');
