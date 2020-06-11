@@ -6,7 +6,9 @@ if (lang === 'ru') {
   console.log('Понедельник, вторник, среда, четверг, пятница, суббота, воскресенье');
 } else if (lang === 'en') {
   console.log('Monday, Tuesday, wednesday, thursday, friday, saturday, sunday');
-};
+} else {
+  console.log('Введите либо "ru" либо "en"');
+}
 
 
 // Задание номер один с использованием switch
@@ -17,14 +19,21 @@ switch (lang) {
   case 'en': 
     console.log('Monday, Tuesday, wednesday, thursday, friday, saturday, sunday');
     break;
+  default: 
+    console.log('Введите либо "ru" либо "en"');
 }
 
 // Задание номер один с использованием тернарных операторов
-const langArr = [
-  ['Понедельник, вторник, среда, четверг, пятница, суббота, воскресенье'],
-  ['Monday, Tuesday, wednesday, thursday, friday, saturday, sunday']
-]
-lang === 'ru' ? console.log(langArr[0].toString()) : console.log(langArr[1].toString());;
+const langArr = new Map([
+  ['ru', 'Понедельник, вторник, среда, четверг, пятница, суббота, воскресенье'],
+  ['en', 'Monday, Tuesday, wednesday, thursday, friday, saturday, sunday']
+]);
+
+// lang === 'ru' || lang === 'en' ? console.log(langArr.get(lang)) : console.log('Введите либо "ru" либо "en"');
+console.log(langArr.get(lang));
+
+
+
 
 
 
