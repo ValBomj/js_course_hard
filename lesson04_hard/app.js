@@ -1,15 +1,22 @@
 'use strict';
+
+let isNumber = function (n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+};
+
+
+// Проверяю переданый аргумент на number и на boolean
 function foo (argument) {
-  if (typeof(argument) !== 'string') {
+  if (isNumber(argument)  || typeof(argument) === 'boolean' && typeof(argument) === 'boolean' ) {
     console.log('Не строка');
-  } else if (argument.length >= 30) {
+  } else if (argument.trim().length >= 30) {
     console.log(argument.trim().slice(0, 30) + '...');
   } else {
     console.log(argument);
   }
 
   // Вариант через тернарные операторы
-  typeof(argument) !== 'string' ? console.log('Не строка') : argument.length >= 30 ? console.log(argument.trim().slice(0, 30) + '...') : console.log(argument);
+  isNumber(argument) || typeof(argument) === 'boolean' && typeof(argument) === 'boolean' ? console.log('Не строка') : argument.trim().length >= 30 ? console.log(argument.trim().slice(0, 30) + '...') : console.log(argument);
 }
   
-  foo('Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, amet.');
+  foo('Lorem, ipsum dolor sit amet consectetur adipisicing elit.');
