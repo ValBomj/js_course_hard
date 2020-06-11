@@ -12,7 +12,7 @@ function foo (argument) {
   } else if (argument.trim().length >= 30) {
     console.log(argument.trim().slice(0, 30) + '...');
   } else {
-    console.log(argument);
+    console.log(argument.trim());
   }
 
   // Вариант через тернарные операторы
