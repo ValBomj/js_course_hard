@@ -1,71 +1,59 @@
 "use strict";
 
 const todayA = new Date();
+// День недели на русском
 const day = todayA.toLocaleString('ru', {weekday: 'long'});
+// Число от 1 до 31
 const date = todayA.getDate();
+// Месяц на русском
 const month = todayA.toLocaleString('ru', {month: 'long'});
+// Число от 1 до 12
+const monthB = todayA.getMonth() + 1;
+// Окончание "я" у месяца
 const newMonth = month.slice(0, month.length - 1) + 'я';
+// Год
 const year = todayA.getFullYear();
+// Часи
 const hours = todayA.getHours();
-
-function curentHour(time){
-  if (time === 1 || time === 21) {
-    return ' час ';
-  } else if (time >= 2 && time <= 4 || time === 22 || time === 23) {
-    return ' часа ';
-  } else if (time >= 5 && time < 21 || time === 0) {
-    return ' часов ';
-  }
-}
-
+// Минуты 
 const minutes = todayA.getMinutes();
-
-function curentMinutes(time){
-  if (time === 1 || time === 21 || time === 31 || time === 41 || time === 51) {
-    return ' минута ';
-  } else if (time >= 2 && time <= 4 || time >= 22 && time <= 24 || time >= 32 && time <= 34 || time >= 42 && time <= 44 || time >= 52 && time <= 54) {
-    return ' минуты ';
-  } else if (time === 0 || time >= 5 && time <= 20 || time >= 25 && time <= 30 || time >= 35 && time <= 40 || time >= 45 && time <= 50 || time >= 55 && time <= 60) {
-    return ' минут ';
-  }
-}
-
+// Секунды
 const seconds = todayA.getSeconds();
 
-function curentSeconds(time){
-  if (time === 1 || time === 21 || time === 31 || time === 41 || time === 51) {
-    return ' секунда ';
-  } else if (time >= 2 && time <= 4 || time >= 22 && time <= 24 || time >= 32 && time <= 34 || time >= 42 && time <= 44 || time >= 52 && time <= 54) {
-    return ' секунды ';
-  } else if (time === 0 || time >= 5 && time <= 20 || time >= 25 && time <= 30 || time >= 35 && time <= 40 || time >= 45 && time <= 50 || time >= 55 && time <= 60) {
-    return ' секунд ';
+// Склонение слова в зависимости от number (число)
+const univ = function (number, arr) {  
+  const options = [2, 0, 1, 1, 1, 2];  
+  if (number % 100 >= 5 && number % 100 <= 19) {
+    return number + ' ' + arr[2] + ' ';
+  } else if (number % 10 <= 4) {
+    return number + ' ' + arr[options[number % 10]] + ' ';
+  } else {
+    return number + ' ' + arr[options[0]] + ' ';
   }
 }
 
-
-
-const todayB = new Date();
-const dayB = todayB.getDay();
-const monthB = todayB.getMonth();
-const yearB = todayB.getFullYear();
-
-const hoursB = todayB.getHours();
-const minutesB = todayB.getMinutes();
-const secondsB = todayB.getSeconds();
-
-function newDate(date) {
-  if (date < 10) {
+// Добавление 0 вначало если число меньше 10
+function univ2 (date) {
+  if (date > 0 && date <= 9) {
     return '0' + date;
   } else {
     return date;
   }
 }
 
-const dateA = 'Сегодня ' + day + ', ' + date + ' ' +  newMonth + ' ' + year + ' года, ' + hours + curentHour(hours) + minutes + curentMinutes(minutes) + seconds + curentSeconds(seconds);
-const dateB = newDate(dayB) + '.' + newDate(monthB) + '.' + newDate(yearB) + ' - ' + newDate(hoursB) + ':' + newDate(minutesB) + ':' + newDate(secondsB);
+const dateA = 'Сегодня ' + day + ', ' + date + ' ' +  newMonth + ' ' + year + ' года, ' + univ(hours, ['час', 'часа', 'часов' ]) + univ(minutes, ['минута', 'минуты', 'минут']) + univ(seconds, ['секунда', 'секунды', 'секунд']);
+const dateB = univ2(date) + '.' + univ2(monthB) + '.' + univ2(year) + ' - ' + univ2(hours) + ':' + univ2(minutes) + ':' + univ2(seconds);
 
-setInterval(function() {
-  console.log(dateA);
-  console.log(dateB);
+const inter = setInterval(function() {
+  const html = document.querySelector('html');
+  const dateFormatA = document.createElement('p');
+  const dateFormatB = document.createElement('p');
+
+  dateFormatA.textContent = dateA;
+  dateFormatB.textContent = dateB;
+
+  html.appendChild(dateFormatA);
+  html.appendChild(dateFormatB);
 }, 1000);
+
 
