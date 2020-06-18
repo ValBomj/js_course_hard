@@ -1,24 +1,26 @@
 "use strict";
-
-const todayA = new Date();
-// День недели на русском
-const day = todayA.toLocaleString('ru', {weekday: 'long'});
-// Число от 1 до 31
-const date = todayA.getDate();
-// Месяц на русском
-const month = todayA.toLocaleString('ru', {month: 'long'});
-// Число от 1 до 12
-const monthB = todayA.getMonth() + 1;
-// Окончание "я" у месяца
-const newMonth = month.slice(0, month.length - 1) + 'я';
-// Год
-const year = todayA.getFullYear();
-// Часи
-const hours = todayA.getHours();
-// Минуты 
-const minutes = todayA.getMinutes();
-// Секунды
-const seconds = todayA.getSeconds();
+let todayA, day, date, month, monthB, newMonth, year, hours, minutes, seconds;
+function timeReset() {
+  todayA = new Date(),
+  // День недели на русском
+  day = todayA.toLocaleString('ru', {weekday: 'long'}),
+  // Число от 1 до 31
+  date = todayA.getDate(),
+  // Месяц на русском
+  month = todayA.toLocaleString('ru', {month: 'long'}),
+  // Число от 1 до 12
+  monthB = todayA.getMonth() + 1,
+  // Окончание "я" у месяца
+  newMonth = month.slice(0, month.length - 1) + 'я',
+  // Год
+  year = todayA.getFullYear(),
+  // Часи
+  hours = todayA.getHours(),
+  // Минуты 
+  minutes = todayA.getMinutes(),
+  // Секунд
+  seconds = todayA.getSeconds()
+}
 
 // Склонение слова в зависимости от number (число)
 const univ = function (number, arr) {  
@@ -41,19 +43,16 @@ function univ2 (date) {
   }
 }
 
-const dateA = 'Сегодня ' + day + ', ' + date + ' ' +  newMonth + ' ' + year + ' года, ' + univ(hours, ['час', 'часа', 'часов' ]) + univ(minutes, ['минута', 'минуты', 'минут']) + univ(seconds, ['секунда', 'секунды', 'секунд']);
-const dateB = univ2(date) + '.' + univ2(monthB) + '.' + univ2(year) + ' - ' + univ2(hours) + ':' + univ2(minutes) + ':' + univ2(seconds);
 
 const inter = setInterval(function() {
   const html = document.querySelector('html');
   const dateFormatA = document.createElement('p');
   const dateFormatB = document.createElement('p');
 
-  dateFormatA.textContent = dateA;
-  dateFormatB.textContent = dateB;
+  timeReset();
+  dateFormatA.textContent = 'Сегодня ' + day + ', ' + date + ' ' +  newMonth + ' ' + year + ' года, ' + univ(hours, ['час', 'часа', 'часов' ]) + univ(minutes, ['минута', 'минуты', 'минут']) + univ(seconds, ['секунда', 'секунды', 'секунд']);
+  dateFormatB.textContent = univ2(date) + '.' + univ2(monthB) + '.' + univ2(year) + ' - ' + univ2(hours) + ':' + univ2(minutes) + ':' + univ2(seconds);
 
   html.appendChild(dateFormatA);
   html.appendChild(dateFormatB);
 }, 1000);
-
-
