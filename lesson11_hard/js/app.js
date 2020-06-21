@@ -26,6 +26,41 @@ const isNumber = function (n) {
 };
 
 
+const inputValidation = function() {
+  const placeholderInput = document.querySelectorAll('input');
+  placeholderInput.forEach(function(item) {
+    if (item.placeholder === 'Сумма') {
+      item.addEventListener('keyup', function(e) {
+
+        const itemValueArr = item.value.split('');
+        itemValueArr.forEach(function(letter, i, array) {
+          if (letter.match(/[^0-9]/)) {
+            delete array[i];
+            item.value = array.join('');
+          }
+        });
+      })
+    }
+    if (item.placeholder === 'Наименование') {
+      item.addEventListener('keyup', function(e) {
+
+        const itemValueArr = item.value.split('');
+        itemValueArr.forEach(function(letter, i, array) {
+          if (letter.match(/[^А-Яа-яЁё,.!?;: ]/)) {
+            delete array[i];
+            item.value = array.join('');
+          }
+        });
+
+      })
+    }
+  })
+}
+inputValidation();
+
+
+
+
 const appData = {
   income: {},
   incomeMonth: 0,
@@ -85,6 +120,7 @@ const appData = {
       item.value = '';
     })
     expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
+    inputValidation();  
     expensesItems = document.querySelectorAll('.expenses-items');
     
     if (expensesItems.length === 3) {
@@ -98,6 +134,7 @@ const appData = {
       item.value = '';
     })
     incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomePlus);
+    inputValidation();  
     incomeItems = document.querySelectorAll('.income-items');
     
     if (incomeItems.length === 3) {
@@ -222,25 +259,6 @@ periodSelect.addEventListener('input', function() {
 
 
 
-const placeholderInput = document.querySelectorAll('input');
-placeholderInput.forEach(function(item) {
-  if (item.placeholder === 'Сумма') {
-    item.addEventListener('keyup', function(e) {
-      if (!item.value.match(/^[0-9]*$/i)) {
-        item.value = '';
-        // item.value = item.value.slice(0,-1);
-      }
-    })
-  }
-  if (item.placeholder === 'Наименование') {
-    item.addEventListener('keyup', function(e) {
-      if (/[^А-Яа-яЁё,.!?;: ]/.test(item.value)) {  
-        item.value = '';
-        // item.value = item.value.slice(0,-1);
-      }
-    })
-  }
-})
 
 
 /* // Выводим расходы за месяц
