@@ -140,7 +140,6 @@ class AppData {
     this.inputBlock();
     this.budget = +salaryAmount.value;
 
-    // this.getExpInc();
     this.getExpInc({isIncome: false, array: expensesItems, name: "expenses" });
     this.getExpInc({isIncome: false, array: incomeItems, name: "income" });
     this.getExpensesMonth();
