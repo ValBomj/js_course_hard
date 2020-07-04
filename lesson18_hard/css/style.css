@@ -1,0 +1,39 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+.ball {
+  display: block;
+  width: 300px;
+  position: relative;
+}
+.ball::after {
+  position: absolute;
+  content:'';
+  background-color: #ccc;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  right: 0;
+  top: -30px;
+}
+.buttons {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 300px;
+}
+button {
+  height: 40px;
+  background-color: tomato;
+  border: none;
+  width: 100px;
+  outline: none;
+  cursor: pointer;
+}
+button + button {
+  margin-left: 15px;
+}
+
