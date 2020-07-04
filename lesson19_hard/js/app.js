@@ -46,16 +46,17 @@ window.addEventListener("DOMContentLoaded", () => {
   };
   countTimer("5 july 2020");
 
-
   // Scroll animation
   let menuInter;
   const scrollAnimation = divTop => {
     const top = 50;
     if (document.documentElement.scrollTop < divTop) {
       document.documentElement.scrollTop += top;
-      menuInter = requestAnimationFrame(() => {
-        scrollAnimation(divTop);
-      });
+      if (document.documentElement.scrollTop < document.body.scrollHeight - window.innerHeight) {
+        menuInter = requestAnimationFrame(() => {
+          scrollAnimation(divTop);
+        });
+      }
     } else {
       cancelAnimationFrame(menuInter);
     }
