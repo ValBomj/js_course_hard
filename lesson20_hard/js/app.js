@@ -95,7 +95,7 @@ window.addEventListener("DOMContentLoaded", () => {
         handlerMenu();
       } else if (target.tagName === "A") {
         handlerMenu();
-      } else if (!target.closest('menu')) {
+      } else if (menu.classList.contains('active-menu') && !target.closest('menu')) {
         handlerMenu();
       }
     });
