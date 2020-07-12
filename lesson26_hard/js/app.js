@@ -360,7 +360,8 @@ window.addEventListener("DOMContentLoaded", () => {
   };
   calculator(100);
 
-  const sendForm = formSelector => {
+
+  const sendForm = () => {
     const errorMessage = "Что-то пошло не так",
       loadMessage = `
       <div class="sk-wandering-cubes">
@@ -369,31 +370,40 @@ window.addEventListener("DOMContentLoaded", () => {
       </div>
       `,
       successMessage = "Спасибо! Мы скоро с вами свяжемся!",
-      form = document.getElementById(formSelector),
       statusMessage = document.createElement("div");
 
     statusMessage.style.cssText = "font-size: 2rem; color: white;";
-    form.addEventListener("submit", e => {
-      const fields = [...form.elements];
-      fields.forEach(item => item.value = '');
+    document.addEventListener("submit", e => {
       e.preventDefault();
-      form.appendChild(statusMessage);
-      statusMessage.innerHTML = loadMessage;
-      const formData = new FormData(form);
-      const body = {};
-      formData.forEach((value, key) => {
-        body[key] = value;
+      const form = e.target;
+
+      const fields = [...form.elements];
+      let checkError = 1;
+      fields.forEach(item => {
+        checkError *= item.classList.contains('error') ? 0 : 1;
       });
-      postData(
-        body,
-        () => {
-          statusMessage.textContent = successMessage;
-        },
-        error => {
-          statusMessage.textContent = errorMessage;
-          console.error(error);
-        }
-      );
+      if (checkError) {
+
+        form.appendChild(statusMessage);
+        statusMessage.innerHTML = loadMessage;
+        const formData = new FormData(form);
+        const body = {};
+        formData.forEach((value, key) => {
+          body[key] = value;
+        });
+
+        postData(
+          body,
+          () => {
+            statusMessage.textContent = successMessage;
+          },
+          error => {
+            statusMessage.textContent = errorMessage;
+            console.error(error);
+          }
+        );
+        form.elements.value = '';
+      }
     });
 
     const postData = (body, outputData, errorData) => {
@@ -412,24 +422,24 @@ window.addEventListener("DOMContentLoaded", () => {
 
       request.open("POST", "./server.php");
       request.setRequestHeader("Content-Type", "application/json");
-
       request.send(JSON.stringify(body));
     };
   };
-  sendForm('form1');
-  sendForm('form2');
-  sendForm('form3');
+  sendForm();
 
   const formValid = () => {
-    const forms = document.querySelectorAll('form');
+    const forms = document.querySelectorAll("form");
     forms.forEach(item => {
-      if (item.tagName.toLocaleLowerCase() !== 'button' && item.type !== 'button') {
-        item.addEventListener('input', e => {
+      if (
+        item.tagName.toLocaleLowerCase() !== "button" &&
+        item.type !== "button"
+      ) {
+        item.addEventListener("input", e => {
           const target = e.target;
           const value = target.value;
-          if (target.name === 'user_name' || target.name === 'user_message') {
+          if (target.name === "user_name" || target.name === "user_message") {
             target.value = value.replace(/[^а-яё ]/gi, "");
-          } else if (target.name === 'user_phone') {
+          } else if (target.name === "user_phone") {
             target.value = value.replace(/[^+0-9]/gi, "");
           }
         });
