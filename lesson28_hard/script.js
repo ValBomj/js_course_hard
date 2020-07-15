@@ -26,13 +26,17 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const setData = (data) => {
-    data.cars.forEach((item) => {
-      if (item.brand === select.value) {
-        const { brand, model, price } = item;
-        output.innerHTML = `Тачка ${brand} ${model} <br>
-                Цена: ${price}$`;
-      }
-    });
+    if (select.value !== 'no') {
+      data.cars.forEach((item) => {
+        if (item.brand === select.value) {
+          const { brand, model, price } = item;
+          output.innerHTML = `Тачка ${brand} ${model} <br>
+                  Цена: ${price}$`;
+        } 
+      });
+    } else {
+      output.innerHTML = 'выбери тачку';
+    }
   };
 
   const setError = (error) => {
